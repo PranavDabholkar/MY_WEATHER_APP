@@ -10,8 +10,11 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="app-header">
-    <h1>Weather</h1>
+  <header class="app-header" role="navigation">
+    <div class="brand" aria-label="Weather home">
+      <span class="logo" aria-hidden="true">☀️</span>
+      <h1 class="brand-title">Weather</h1>
+    </div>
     <div class="header-actions">
       <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">🌙</button>
       <div class="unit-switch" role="group" aria-label="Units">
@@ -35,8 +38,6 @@
       </div>
     </section>
 
-    <section class="card" id="status" aria-live="polite"></section>
-
     <section class="grid">
       <article class="card" id="current-card">
         <h2>Current</h2>
@@ -52,11 +53,11 @@
         </div>
       </article>
     </section>
+
+    <div id="toast" class="toast" aria-live="polite" role="status"></div>
   </main>
 
-  <footer class="footer">
-    <span>Powered by Open-Meteo</span>
-  </footer>
+  
 
   <script src="app.js" defer></script>
 </body>

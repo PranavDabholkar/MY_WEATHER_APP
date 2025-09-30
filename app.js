@@ -4,7 +4,8 @@
 (function initWeatherApp() {
   const form = document.getElementById('search-form');
   const input = document.getElementById('city-input');
-  const statusEl = document.getElementById('status');
+  const statusEl = null;
+  const toastEl = document.getElementById('toast');
   const currentEl = document.getElementById('current-weather');
   const forecastEl = document.getElementById('forecast');
   const searchBtn = document.getElementById('search-btn');
@@ -30,8 +31,13 @@
   }
 
   function setStatus(message, type) {
-    statusEl.className = 'card ' + (type ? `status-${type}` : '');
-    statusEl.textContent = message || '';
+    if (!toastEl) return;
+    toastEl.className = 'toast show ' + (type === 'error' ? 'toast-error' : 'toast-success');
+    toastEl.textContent = message || '';
+    clearTimeout(setStatus._t);
+    setStatus._t = setTimeout(() => {
+      toastEl.classList.remove('show');
+    }, 2500);
   }
 
   function setLoading(isLoading) {
@@ -135,13 +141,11 @@
     currentEl.innerHTML = `
       <div class="temp">${temp}${tempUnit}</div>
       <div>
-        <div class="place">${placeName}</div>
+        <div class="place"><span class="icon">📍</span><span>${placeName}</span></div>
         <div class="meta">
-          <span class="condition"><span class="icon">${icon}</span><span>${codeText}</span></span>
-          <span>•</span>
-          <span>Humidity: ${humidityText}</span>
-          <span>•</span>
-          <span>Wind: ${windValue} ${windUnit}</span>
+          <div class="condition"><span class="icon">${icon}</span><span>${codeText}</span></div>
+          <div class="meta-item"><span class="icon">💧</span><span>Humidity: ${humidityText}</span></div>
+          <div class="meta-item"><span class="icon">🌬️</span><span>Wind: ${windValue} ${windUnit}</span></div>
         </div>
       </div>
     `;
@@ -166,11 +170,13 @@
       let rep = items.reduce((prev, cur) => Math.abs(new Date(cur.dt_txt).getHours() - 12) < Math.abs(new Date(prev.dt_txt).getHours() - 12) ? cur : prev, items[0]);
       const label = new Date(dateStr).toLocaleDateString(undefined, { weekday: 'short' });
       const text = rep.weather && rep.weather[0] ? rep.weather[0].description : '';
+      const icon = weatherIconFromOwm(rep);
       return `
         <div class="day">
+          <div class="icon">${icon}</div>
           <div class="label">${label}</div>
           <div class="range">${min}° / ${max}°</div>
-          <div class="label">${text.charAt(0).toUpperCase() + text.slice(1)}</div>
+          <div class="label description">${text.charAt(0).toUpperCase() + text.slice(1)}</div>
         </div>
       `;
     });
