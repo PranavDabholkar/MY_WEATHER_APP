@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Weather App</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <h1>Weather</h1>
+    <div class="header-actions">
+      <button id="theme-toggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">🌙</button>
+      <div class="unit-switch" role="group" aria-label="Units">
+        <button id="unit-c" class="unit-btn" aria-pressed="true">°C</button>
+        <button id="unit-f" class="unit-btn" aria-pressed="false">°F</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card search-card">
+      <form id="search-form" autocomplete="off">
+        <label for="city-input" class="visually-hidden">City</label>
+        <input id="city-input" name="city" type="text" placeholder="Search city e.g. London" required>
+        <button type="submit" id="search-btn">Search</button>
+      </form>
+      <p id="hint" class="hint">Tip: last search is remembered</p>
+      <div id="current-location" class="current-location">
+        <button id="loc-btn" class="loc-btn" type="button">Use Current Location</button>
+        <span id="loc-status" class="hint"></span>
+      </div>
+    </section>
+
+    <section class="card" id="status" aria-live="polite"></section>
+
+    <section class="grid">
+      <article class="card" id="current-card">
+        <h2>Current</h2>
+        <div id="current-weather" class="current-weather">
+          <!-- filled by JS -->
+        </div>
+      </article>
+
+      <article class="card" id="forecast-card">
+        <h2>5-Day Forecast</h2>
+        <div id="forecast" class="forecast">
+          <!-- filled by JS -->
+        </div>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <span>Powered by Open-Meteo</span>
+  </footer>
+
+  <script src="app.js" defer></script>
+</body>
+<script>
+  // Prevent FOUC in some browsers by ensuring dark color bg before CSS loads
+  document.documentElement.style.backgroundColor = '#0b1220';
+  document.documentElement.style.color = '#e5e7eb';
+  setTimeout(() => {
+    document.documentElement.style.backgroundColor = '';
+    document.documentElement.style.color = '';
+  }, 0);
+</script>
+</html>
+
+
