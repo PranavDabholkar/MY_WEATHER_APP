@@ -198,6 +198,7 @@ button#search-btn:disabled {
 .current-weather .place { display: inline-flex; align-items: center; gap: 8px; }
 .current-weather .condition { display: inline-flex; align-items: center; gap: 6px; }
 .current-weather .condition .icon { font-size: 18px; }
+.current-weather .date { color: var(--muted); font-size: 14px; margin: 4px 0; }
 
 .forecast { display: grid; grid-template-columns: repeat(1, 1fr); gap: 16px; align-items: stretch; }
 @media (min-width: 600px) { .forecast { grid-template-columns: repeat(5, 1fr); } }
@@ -216,6 +217,7 @@ button#search-btn:disabled {
 }
 .day .icon { font-size: 28px; }
 .day .label { color: var(--muted); font-size: 14px; }
+.day .date { color: var(--muted); font-size: 12px; margin: 2px 0; }
 .day .range { font-weight: 700; margin-top: 4px; font-size: 18px; white-space: nowrap; }
 .day .label.description {
   min-height: 34px;

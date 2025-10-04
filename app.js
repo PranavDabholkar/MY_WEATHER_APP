@@ -138,10 +138,17 @@
     const windUnit = unit === 'f' ? 'mph' : 'km/h';
     const windValue = unit === 'f' ? Math.round(weather.wind.speed) : kphFromMs(weather.wind.speed);
     const icon = weatherIconFromOwm(weather);
+    const currentDate = new Date().toLocaleDateString(undefined, { 
+      weekday: 'long', 
+      year: 'numeric', 
+      month: 'long', 
+      day: 'numeric' 
+    });
     currentEl.innerHTML = `
       <div class="temp">${temp}${tempUnit}</div>
       <div>
         <div class="place"><span class="icon">📍</span><span>${placeName}</span></div>
+        <div class="date">${currentDate}</div>
         <div class="meta">
           <div class="condition"><span class="icon">${icon}</span><span>${codeText}</span></div>
           <div class="meta-item"><span class="icon">💧</span><span>Humidity: ${humidityText}</span></div>
@@ -169,12 +176,14 @@
       // Pick description near midday if available
       let rep = items.reduce((prev, cur) => Math.abs(new Date(cur.dt_txt).getHours() - 12) < Math.abs(new Date(prev.dt_txt).getHours() - 12) ? cur : prev, items[0]);
       const label = new Date(dateStr).toLocaleDateString(undefined, { weekday: 'short' });
+      const date = new Date(dateStr).toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
       const text = rep.weather && rep.weather[0] ? rep.weather[0].description : '';
       const icon = weatherIconFromOwm(rep);
       return `
         <div class="day">
           <div class="icon">${icon}</div>
           <div class="label">${label}</div>
+          <div class="date">${date}</div>
           <div class="range">${min}° / ${max}°</div>
           <div class="label description">${text.charAt(0).toUpperCase() + text.slice(1)}</div>
         </div>
